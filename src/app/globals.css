@@ -1109,60 +1109,41 @@ h1 {
   opacity: 1;
 }
 
-.calc {
+.market-terminal {
   margin-top: 6vh;
-  background: var(--sf);
+  overflow: hidden;
   border: 1px solid var(--bd);
-  border-radius: 22px;
-  padding: clamp(20px, 3vw, 40px);
-  max-width: 900px;
+  border-radius: 18px;
+  background: var(--sf);
 }
 
-.fields {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 14px;
-}
-
-.fields label {
+.market-terminal-heading,
+.market-terminal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px 24px;
+  flex-wrap: wrap;
+  padding: 18px 22px;
   font-size: 12px;
   color: var(--mu);
 }
 
-.fields input {
-  width: 100%;
-  margin-top: 6px;
-  background: var(--bg);
-  border: 1px solid var(--bd);
-  color: var(--tx);
-  border-radius: 10px;
-  padding: 11px 12px;
-  font: inherit;
-  font-size: 15px;
-}
+.market-terminal-heading { border-bottom: 1px solid var(--bd); }
+.market-terminal-heading .m { color: var(--ac); letter-spacing: 0.12em; }
+.market-chart-area { position: relative; height: clamp(480px, 68vh, 760px); }
+.market-chart { width: 100%; height: 100%; }
+.market-chart iframe { display: block; width: 100%; height: 100%; border: 0; }
+.market-terminal-footer { border-top: 1px solid var(--bd); }
+.market-terminal-footer a,
+.market-chart-error a { color: var(--ac); }
+.market-chart-error { position: absolute; inset: 0; display: grid; place-content: center; gap: 12px; padding: 24px; text-align: center; background: var(--sf); }
 
-.out {
-  margin-top: 26px;
-  padding-top: 22px;
-  border-top: 1px solid var(--bd);
-  display: flex;
-  align-items: baseline;
-  gap: 16px;
-  flex-wrap: wrap;
+@media (max-width: 600px) {
+  .market-terminal-heading,
+  .market-terminal-footer { padding: 14px; font-size: 11px; }
+  .market-chart-area { height: 520px; }
 }
-
-.out b {
-  font-size: clamp(40px, 6vw, 72px);
-  letter-spacing: -0.04em;
-  color: var(--ac);
-  font-weight: 600;
-}
-
-.out span {
-  color: var(--mu);
-  font-size: 14px;
-}
-
 .journey-wrap {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(360px, 0.85fr);

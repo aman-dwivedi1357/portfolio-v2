@@ -69,6 +69,13 @@ export const coreSystems = [
 
 export const portfolioProjects = [
   {
+    title: "Global Apex Markets trading platform",
+    body: "Live trading terminal for the real-time trading platform I worked on.",
+    href: "https://terminal.globalapexmarkets.com/",
+    linkLabel: "Open trading terminal",
+    tags: ["Trading", "Realtime", "WebSocket"],
+  },
+  {
     title: "CriCludo",
     body: "Real-time multiplayer cricket game backend with Redis Streams, Pub/Sub and MongoDB.",
     href: "#contact",
@@ -78,17 +85,17 @@ export const portfolioProjects = [
   {
     title: "Fleet management app",
     body: "MERN booking platform with Firebase OTP, admin workflows and scheduling conflict protection.",
-    href: "#contact",
-    linkLabel: "Add project link",
+    href: "https://4wheeltravels.com/",
+    linkLabel: "Visit live site",
     tags: ["MERN", "Firebase", "Bookings"],
   },
-  {
-    title: "Trading systems demos",
-    body: "Interactive portfolio demos that explain copy-trade sizing and event-driven execution flows.",
-    href: "#demo",
-    linkLabel: "Open demo",
-    tags: ["TypeScript", "UX", "Systems"],
-  },
+  // {
+  //   title: "Interactive trading chart",
+  //   body: "Explore market prices, candlestick charts, timeframes and technical indicators powered by TradingView.",
+  //   href: "#demo",
+  //   linkLabel: "Open demo",
+  //   tags: ["Markets", "Charts", "TradingView"],
+  // },
 ] as const;
 
 export const flowSteps = [

@@ -2,19 +2,12 @@
 
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { coreSystems, flowSteps, journey, navItems, portfolioProjects, techRows } from "./data";
 import { JourneyGlobe } from "./journey-globe";
-
-type CalcState = {
-  leaderVolume: number;
-  leaderEquity: number;
-  followerCapital: number;
-  minVolume: number;
-  volumeStep: number;
-};
+import { TradingChart } from "./trading-chart";
 
 const email = "amandwivedi1357@gmail.com";
 
@@ -26,31 +19,6 @@ export function PortfolioClient() {
   const [copied, setCopied] = useState(false);
   const [activeJourney, setActiveJourney] = useState(0);
   const [tick, setTick] = useState({ bid: "1.08414", ask: "1.08417", spread: "0.3" });
-  const [calc, setCalc] = useState<CalcState>({
-    leaderVolume: 2,
-    leaderEquity: 50000,
-    followerCapital: 5000,
-    minVolume: 0.01,
-    volumeStep: 0.01,
-  });
-
-  const result = useMemo(() => {
-    const { leaderVolume, leaderEquity, followerCapital, minVolume, volumeStep } = calc;
-    const step = volumeStep || 0.01;
-    if (leaderEquity <= 0) return { volume: "0", why: "Leader equity must be greater than zero" };
-    if (leaderVolume <= 0) return { volume: "0", why: "Leader volume must be greater than zero" };
-    if (followerCapital <= 0) return { volume: "0", why: "Follower capital must be greater than zero" };
-
-    const volume = Number(
-      (Math.floor((leaderVolume * (followerCapital / leaderEquity)) / step + 1e-9) * step).toFixed(8),
-    );
-
-    if (volume < minVolume) {
-      return { volume: "0", why: "Calculated volume is below broker minimum" };
-    }
-
-    return { volume: volume.toFixed(2), why: "follower volume" };
-  }, [calc]);
 
   useEffect(() => {
     let mid = 1.08415;
@@ -652,10 +620,6 @@ export function PortfolioClient() {
     };
   }, []);
 
-  const updateCalc = (key: keyof CalcState, value: string) => {
-    setCalc((current) => ({ ...current, [key]: Number(value) }));
-  };
-
   const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText(email);
@@ -840,8 +804,7 @@ export function PortfolioClient() {
           </p>
           <h2 data-split>Links worth opening.</h2>
           <p className="sub">
-            A dedicated place for public demos, live builds and source links. The professional
-            trading work stays summarized above where the details are private.
+            Explore live trading and fleet management projects, alongside public demos and builds.
           </p>
           <div className="project-grid">
             {portfolioProjects.map((project) => (
@@ -851,7 +814,12 @@ export function PortfolioClient() {
                   <h3>{project.title}</h3>
                   <span>{project.body}</span>
                 </div>
-                <Link className="project-link m mg" href={project.href}>
+                <Link
+                  className="project-link m mg"
+                  href={project.href}
+                  target={project.href.startsWith("https://") ? "_blank" : undefined}
+                  rel={project.href.startsWith("https://") ? "noopener noreferrer" : undefined}
+                >
                   {project.linkLabel}
                   <ArrowUpRight size={14} strokeWidth={2} />
                 </Link>
@@ -882,72 +850,12 @@ export function PortfolioClient() {
           <p className="lab m scr" data-t="Interactive demo">
             Interactive demo
           </p>
-          <h2 data-split>Copy-trade sizing.</h2>
+          <h2 data-split>The market, in motion.</h2>
           <p className="sub">
-            Mirrors the sizing logic I built: proportional to allocated capital, floored to the
-            broker's step size, rejected below the minimum.
+            Explore an interactive trading chart. Switch markets and timeframes, inspect
+            candlesticks, and try technical indicators.
           </p>
-          <div className="calc m">
-            <div className="fields">
-              <div>
-                <label htmlFor="lv">Leader volume</label>
-                <input
-                  id="lv"
-                  min="0"
-                  step="0.01"
-                  type="number"
-                  value={calc.leaderVolume}
-                  onChange={(event) => updateCalc("leaderVolume", event.target.value)}
-                />
-              </div>
-              <div>
-                <label htmlFor="le">Leader equity</label>
-                <input
-                  id="le"
-                  min="0"
-                  type="number"
-                  value={calc.leaderEquity}
-                  onChange={(event) => updateCalc("leaderEquity", event.target.value)}
-                />
-              </div>
-              <div>
-                <label htmlFor="fc">Follower capital</label>
-                <input
-                  id="fc"
-                  min="0"
-                  type="number"
-                  value={calc.followerCapital}
-                  onChange={(event) => updateCalc("followerCapital", event.target.value)}
-                />
-              </div>
-              <div>
-                <label htmlFor="mv">Min volume</label>
-                <input
-                  id="mv"
-                  min="0"
-                  step="0.01"
-                  type="number"
-                  value={calc.minVolume}
-                  onChange={(event) => updateCalc("minVolume", event.target.value)}
-                />
-              </div>
-              <div>
-                <label htmlFor="vs">Volume step</label>
-                <input
-                  id="vs"
-                  min="0.0001"
-                  step="0.01"
-                  type="number"
-                  value={calc.volumeStep}
-                  onChange={(event) => updateCalc("volumeStep", event.target.value)}
-                />
-              </div>
-            </div>
-            <div className="out">
-              <b>{result.volume}</b>
-              <span>{result.why}</span>
-            </div>
-          </div>
+          <TradingChart />
         </section>
 
         <section id="xp">
@@ -999,7 +907,7 @@ export function PortfolioClient() {
             <a href="tel:+971521135798">+971 52 1135798</a>
           </Button>
         </div>
-        <small className="m">{email} · Dubai, UAE · Employment visa (transferable)</small>
+        <small className="m">{email} · Dubai, UAE · Employment visa</small>
       </footer>
     </>
   );
